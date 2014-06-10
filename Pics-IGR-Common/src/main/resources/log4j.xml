@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+  ~ Copyright (c) 2014. PICS Auditing. All Rights Reserved.  This file is privileged, confidential and exempt from disclosure
+  ~ under applicable law.  If you have received this file in error, please notify PICS Auditing LLC immediately, and destroy
+  ~ the original file and all copies thereof (including electronic media).
+  -->
+
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+    <!-- Appenders -->
+
+    <appender name="CONSOLE" class="org.apache.log4j.ConsoleAppender">
+        <param name="Target" value="System.out" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d [%t] %-5p %c - %m%n" />
+        </layout>
+    </appender>
+
+    <!-- Package Specific Loggers -->
+
+    <logger name="com.com" additivity="false">
+        <level value="ERROR" />
+        <appender-ref ref="CONSOLE" />
+    </logger>
+
+    <logger name="org.springframework" additivity="false">
+        <level value="ERROR" />
+        <appender-ref ref="CONSOLE" />
+    </logger>
+	<logger name="org.springframework.oxm.jaxb" additivity="false">
+	<level value="ERROR"/>
+	</logger>
+    <logger name="org.hibernate" additivity="false">
+        <level value="ERROR" />
+        <appender-ref ref="CONSOLE" />
+    </logger>
+
+    <logger name="com.mchange" additivity="false">
+        <level value="ERROR" />
+        <appender-ref ref="CONSOLE" />
+    </logger>
+
+    <!-- Root Logger -->
+
+    <root>
+        <priority value="ERROR" />
+        <appender-ref ref="CONSOLE" />
+    </root>
+
+</log4j:configuration>

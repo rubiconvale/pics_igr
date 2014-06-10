@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+	<!-- Appenders -->
+	<appender name="CONSOLE" class="org.apache.log4j.ConsoleAppender">
+		<param name="Target" value="System.out" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d %-5p [%t] %c:%L %m%n" />
+		</layout>
+	</appender>
+    <appender name="DATA" class="org.apache.log4j.RollingFileAppender">
+        <param name="File" value="../log/cnv_data.log" />
+        <param name="Append" value="true" />
+        <param name="MaxFileSize" value="5MB" />
+        <param name="MaxBackupIndex" value="10" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%t %-5p %c{2} - %m%n"/>
+        </layout>
+    </appender>
+
+    <appender name="NGT" class="org.apache.log4j.RollingFileAppender">
+        <param name="File" value="/log/cnv_app.log" />
+        <param name="Append" value="true" />
+        <param name="MaxFileSize" value="5MB" />
+        <param name="MaxBackupIndex" value="10" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{ISO8601} %-5p %30.30c - %m%n"/>
+        </layout>
+    </appender>
+    <appender name="AOP" class="org.apache.log4j.RollingFileAppender">
+        <param name="File" value="/log/cnv_aop.log" />
+        <param name="Append" value="true" />
+        <param name="MaxFileSize" value="5MB" />
+        <param name="MaxBackupIndex" value="10" />        
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{ISO8601} %-5p %30.30c - %m%n"/>
+        </layout>
+    </appender>
+	
+	<!-- Application Loggers -->
+	<logger name="com.picsauditing" additivity="false">
+		<level value="debug" />
+		 <appender-ref ref="CONSOLE" />
+	</logger>
+	<!-- 3rdparty Loggers -->
+	<!-- Loggers -->
+    <logger name="org.springframework" additivity="false">
+        <level value="error" />
+        <appender-ref ref="CONSOLE" />
+        <!--<appender-ref ref="NGT" />-->
+    </logger>	
+	<logger name="org.springframework.integration">
+		<level value="error" />
+	</logger>
+	<logger name="org.springframework.jdbc" additivity="false">
+		<level value="error"/>
+		<appender-ref ref="CONSOLE"/>
+	</logger>
+	<logger name="org.springframework.integration.store">
+		<level value="error" />
+	</logger>
+
+	<logger name="org.springframework.integration.aggregator">
+		<level value="error" />
+	</logger>
+    <logger name="org.springframework.core" additivity="false">
+        <level value="error" />
+        <appender-ref ref="CONSOLE" />
+     </logger>
+    <logger name="org.springframework.web.client" additivity="false">
+        <level value="error" />
+        <appender-ref ref="CONSOLE" />
+     </logger>
+    <logger name="org.springframework.core.test" additivity="false">
+        <level value="error" />
+        <appender-ref ref="CONSOLE" />
+    </logger>
+    <logger name="org.springframework.integration.handler" additivity="false">
+        <level value="error" />
+        <appender-ref ref="CONSOLE" />
+        <!--<appender-ref ref="DATA" />--> 
+    </logger>
+        <logger name="org.hibernate" additivity="false">
+        <level value="error" />
+        <appender-ref ref="CONSOLE" />
+        <!--<appender-ref ref="DATA" />-->        
+    </logger>
+
+    <logger name="org.hibernate.SQL" additivity="false">
+        <level value="error" />
+        <!--<appender-ref ref="CONSOLE" />-->
+        <!--<appender-ref ref="DATA" />-->        
+    </logger>
+
+    <logger name="org.hibernate.type" additivity="false">
+        <level value="error" />
+        <!--<appender-ref ref="CONSOLE" />-->
+        <!--<appender-ref ref="DATA" />-->        
+    </logger>
+
+    <logger name="net.sf.ehcache" additivity="false">
+    <level value="error"/>
+    <appender-ref ref="CONSOLE" />
+    <!--<appender-ref ref="DATA" />-->
+    </logger>
+    <logger name="com.fasterxml.jackson" additivity="false">
+    <level value="error"/>
+    <appender-ref ref="CONSOLE" />    
+    </logger>
+
+	<logger name="org.apache.http">
+			<level value="all" />
+		    <appender-ref ref="CONSOLE" /> 
+	</logger>
+
+	<logger name="org.apache.http.wire">
+			<level value="all" />
+		    <appender-ref ref="CONSOLE" /> 
+	</logger>	
+<logger name="net.sourceforge.jtds.jdbc.Driver">
+    <level value="error"/>
+    <appender-ref ref="CONSOLE" /> 
+
+</logger>
+
+	<!-- Root Logger -->
+	<root>
+		<priority value="DEBUG" />
+		<appender-ref ref="CONSOLE" />
+	</root>
+	
+</log4j:configuration>

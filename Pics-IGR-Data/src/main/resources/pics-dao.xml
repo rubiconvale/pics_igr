@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:tx="http://www.springframework.org/schema/tx" xmlns:cache="http://www.springframework.org/schema/cache"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+<cache:annotation-driven/>
+
+
+	<context:component-scan base-package="com.picsauditing" />
+	<context:annotation-config></context:annotation-config>
+<bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager">
+   <property name="cacheManager" ref="ehcache"/>
+</bean>
+
+<bean id="ehcache" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
+   <property name="configLocation" value="classpath:pics-ehcache.xml"/>
+   <property name="shared" value="true"/>
+</bean>
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="ignoreResourceNotFound" value="true" />
+		<property name="locations">
+			<list>
+				<value>classpath*:db.local.properties</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="svcTxnManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+
+	<tx:annotation-driven transaction-manager="svcTxnManager" />
+    <!-- ************ Spring JPA configuration *********** -->
+	<bean id="namedParameterJdbcTemplate" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
+	<property name="cacheLimit" value="1000"/>
+		<constructor-arg ref="dataSource"/>
+	</bean>
+
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <property name="driverClass" value="com.mysql.jdbc.Driver" />
+		<property name="jdbcUrl" value="${database.url}" />
+		<property name="user" value="${database.username}" />
+		<property name="password" value="${database.password}" />
+		<property name="acquireIncrement" value="${c3p0.acquireIncrement}" />
+		<property name="minPoolSize" value="${c3p0.minPoolSize}" />
+		<property name="maxPoolSize" value="${c3p0.maxPoolSize}" />
+		<property name="maxIdleTime" value="${c3p0.maxIdleTime}" />
+	</bean>
+
+    <!-- ************Hibernate - JPA configuration *********** -->
+
+
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+
+		<property name="dataSource" ref="dataSource" />
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.show_sql">false</prop>
+				<prop key="hibernate.dialect">org.hibernate.dialect.SQLServerDialect</prop>
+				<prop key="hibernate.format_sql">false</prop>
+				<prop key="hibernate.use_sql_comments">true</prop>
+				<prop key="hibernate.auto_close_session">false</prop>
+                <!--
+				<prop key="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory</prop>
+				<prop key="net.sf.ehcache.configurationResourceName">pics-ehcache.xml</prop>
+				<prop key="hibernate.cache.use_query_cache">true</prop>
+				<prop key="hibernate.cache.use_second_level_cache">true</prop>
+				-->
+			</props>
+		</property>
+
+		<property name="packagesToScan">
+			<list>
+				<value>com.picsauditing.data.model</value>
+			</list>
+		</property>
+	</bean>
+</beans>

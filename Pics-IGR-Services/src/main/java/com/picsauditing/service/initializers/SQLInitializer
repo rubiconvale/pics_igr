@@ -1,0 +1,43 @@
+package com.picsauditing.service.initializers;
+/**
+ * Copyright (c) 2014. PICS Auditing LLC. All Rights Reserved.  This file is privileged, confidential and exempt from disclosure
+ * under applicable law.  If you have received this file in error, please notify PICS Auditing LLC immediately, and destroy
+ * the original file and all copies thereof (including electronic media).
+ */
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import com.lexipol.service.kms.content.ContentService;
+import com.lexipol.service.kms.item.ItemService;
+import com.lexipol.service.kms.policy.PolicyService;
+
+
+/**
+ * @Author RNatarajan on 6/7/2014.
+ * Modification Log :
+ */
+
+@Component
+
+public class XDBInitializer implements InitializingBean {
+
+    final Logger log = LoggerFactory.getLogger(this.getClass());
+	/* (non-Javadoc)
+	 * @see org.springframework.beans.factory.InitializingBean#afterPropertiesSet()
+	 */
+/*
+ * Initialize xdb database
+ */
+	@Autowired 
+	PolicyService policyService;
+	@Override
+	public void afterPropertiesSet() throws Exception {
+		log.debug("Service initialization");
+		//If needed pre-initialize the connection
+
+	}
+
+}
