@@ -14,6 +14,11 @@ import java.util.List;
 
 public class ContractorInfoDaoImpl extends		AbstractDaoImpl<ContractorInfo, Integer> implements IContractorInfoDao {
 
+	/**
+	 * Added new ser number
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Override
 	public ContractorInfo findContractorInfoByName(String name)			throws DAOLayerException {
         log.trace("entered ContractorInfoDaoImpl.findContractorInfoByName({})",name);
