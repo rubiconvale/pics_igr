@@ -28,6 +28,23 @@ public enum BaseObjectType {
 		public Integer getIntValue(){
 			return 10;
 		}
+	},
+	AUDITGUARD("AuditGuard") {
+
+		@Override
+		public String getDescription() {
+			return "AuditGuard";
+		}
+
+		@Override
+		public boolean isActive() {
+			return true;
+		}
+
+		@Override
+		public Integer getIntValue(){
+			return 10;
+		}
 	};
     private final String entity;
 
