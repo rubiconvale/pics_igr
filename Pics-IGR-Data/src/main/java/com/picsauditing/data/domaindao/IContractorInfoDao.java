@@ -6,7 +6,7 @@ import com.picsauditing.exception.DAOLayerException;
 
 import java.util.List;
 
-
+//This ia a test
 public interface IContractorInfoDao {
 
 	List<ContractorInfo> findAllContractorInfo() throws DAOLayerException;
