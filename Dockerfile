@@ -1,14 +1,23 @@
-FROM ubuntu
-MAINTAINER tallred@picsauditing.com
+FROM ubuntu:latest
+
+MAINTAINER Meir Wahnon
 
 RUN apt-get update
-RUN apt-get install openjdk-7-jre-headless -y
-RUN mkdir -p /opt/app
 
-WORKDIR /opt/app
+RUN apt-get install default-jre -y
 
-ADD ./target/oauth-authentication-1.0.0.jar /opt/app/service.jar
-ADD /src/main/resources/config.properties /opt/app/config.properties
+RUN apt-get install default-jdk -y
 
-EXPOSE 9056
-ENTRYPOINT java -Dext.properties.dir=/opt/app -jar /opt/app/service.jar
+RUN apt-get install maven -y
+
+ADD pom.xml /app/
+
+ADD src/ /app/src/
+
+WORKDIR /app/
+
+RUN mvn package
+
+EXPOSE  8080
+
+CMD ["java","-Djava.security.egd=file:/dev/./urandom","-jar","target/spring-boot-sample-tomcat-1.1.5.RELEASE.jar"]
