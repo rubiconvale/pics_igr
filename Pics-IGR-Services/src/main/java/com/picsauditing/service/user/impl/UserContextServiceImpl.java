@@ -43,6 +43,18 @@ public class UserContextServiceImpl implements UserContextService {
 		return hasRole;
 	}
 
+
+	public boolean isAdminUser() {
+		boolean hasRole = false;
+
+		for(GrantedAuthority auth: getCurrentUser().getAuthorities()){
+			if(auth.getAuthority().equals("ROLE_ADMIN_USER")){
+				hasRole = true;
+				break;
+			}
+		}
+		return hasRole;
+	}
 	@Override
 	public boolean isAuthor() {
 		boolean hasRole = false;
